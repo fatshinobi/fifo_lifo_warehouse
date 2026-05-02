@@ -1,7 +1,14 @@
-class ItemsController < ApplicationController
+class ItemsController < Lintity::EntityListController
   # GET /items
+  layout "application"
   def index
-    @items = Item.all
+    @search_path = items_path
+    @records =
+      if @filter_field
+        Item.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+      else
+        Item.all
+      end
   end
 
   # GET /items/new
@@ -38,5 +45,13 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :description, :cost)
+  end
+
+  def init_fields
+    @fields_settings = [
+      { field: "name", name: "Name", type: "edit", path: Proc.new { |item_id| edit_item_path(id: item_id) } },
+      { field: "description", name: "Description", type: "info" },
+      { field: "cost", name: "Cost", type: "numeric_filter" }
+    ]
   end
 end

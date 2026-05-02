@@ -1,3 +1,10 @@
+PATH
+  remote: ../lintity
+  specs:
+    lintity (0.1.0)
+      importmap-rails
+      rails (~> 8.0, >= 8.1.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -82,6 +89,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.24.1)
       msgpack (~> 1.2)
+    bootstrap (5.3.8)
+      popper_js (>= 2.11.8, < 3)
     brakeman (8.0.4)
       racc
     builder (3.3.0)
@@ -91,6 +100,8 @@ GEM
     concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
     crass (1.0.6)
+    cssbundling-rails (1.4.3)
+      railties (>= 6.0.0)
     date (3.5.1)
     debug (1.11.1)
       irb (~> 1.10)
@@ -198,6 +209,7 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
+    popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -374,13 +386,16 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  bootstrap (~> 5.3.3)
   brakeman
   bundler-audit
+  cssbundling-rails
   debug
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
   kamal
+  lintity!
   mysql2 (~> 0.5)
   propshaft
   puma (>= 5.0)
