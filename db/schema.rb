@@ -14,7 +14,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_195153) do
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "cost", precision: 8, scale: 2
     t.datetime "created_at", null: false
-    t.decimal "decimal", precision: 8, scale: 2
     t.string "description"
     t.string "name"
     t.datetime "updated_at", null: false
