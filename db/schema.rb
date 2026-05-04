@@ -10,13 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_04_193008) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_04_204217) do
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "cost", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.string "description"
     t.string "name"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "receiving_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.decimal "cost", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.bigint "item_id", null: false
+    t.decimal "price", precision: 8, scale: 2
+    t.integer "qty"
+    t.bigint "receiving_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_receiving_items_on_item_id"
+    t.index ["receiving_id"], name: "index_receiving_items_on_receiving_id"
+  end
+
+  create_table "receivings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "received_at"
+    t.bigint "storage_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["storage_id"], name: "index_receivings_on_storage_id"
   end
 
   create_table "storages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -26,4 +46,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_193008) do
     t.string "name"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "receiving_items", "items"
+  add_foreign_key "receiving_items", "receivings"
+  add_foreign_key "receivings", "storages"
 end
