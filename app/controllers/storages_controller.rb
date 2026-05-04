@@ -10,6 +10,8 @@ class StoragesController < Lintity::EntityListController
       else
         Storage.all
       end
+
+    @entity_list_header_caption, @entity_list_new_path = "Storages List", new_storage_path
     super
   end
 
@@ -46,7 +48,7 @@ class StoragesController < Lintity::EntityListController
   private
 
   def storage_params
-    params.require(:storage).permit(:name, :location, :capacity)
+    params.require(:storage).permit(:name, :location, :description)
   end
 
   def init_fields
