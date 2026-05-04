@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_02_195153) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_04_193008) do
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "cost", precision: 8, scale: 2
     t.datetime "created_at", null: false
@@ -21,6 +21,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_195153) do
 
   create_table "storages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.text "description"
+    t.string "location"
     t.string "name"
     t.datetime "updated_at", null: false
   end
