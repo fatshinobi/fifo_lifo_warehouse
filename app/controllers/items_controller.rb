@@ -9,6 +9,8 @@ class ItemsController < Lintity::EntityListController
       else
         Item.all
       end
+
+    @entity_list_header_caption, @entity_list_new_path = "Items List", new_item_path
   end
 
   # GET /items/new
