@@ -1,0 +1,44 @@
+<%= form_with(model: @receiving, local: true) do |f| %>
+  <% if @receiving.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@receiving.errors.count, "error") %> prohibited this receiving from being saved:</h2>
+      <ul>
+        <% @receiving.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :storage_id %>
+    <%= f.collection_select :storage_id, Storage.all, :id, :name, prompt: true %>
+  </div>
+
+  <h3>Receiving Items</h3>
+  <%= f.fields_for :receiving_items do |ri| %>
+    <div class="nested-fields">
+      <div class="field">
+        <%= ri.label :item_id %>
+        <%= ri.collection_select :item_id, Item.all, :id, :name, prompt: true %>
+      </div>
+      <div class="field">
+        <%= ri.label :qty %>
+        <%= ri.number_field :qty, min: 1 %>
+      </div>
+      <div class="field">
+        <%= ri.label :cost %>
+        <%= ri.number_field :cost, step: 0.01 %>
+      </div>
+      <div class="field">
+        <%= ri.check_box :_destroy %>
+        <%= ri.label :_destroy, "Remove" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

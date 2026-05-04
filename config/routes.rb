@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :items, only: [ :index, :new, :create, :edit, :update ]
   resources :storages, only: [ :index, :new, :create, :edit, :update ]
+  resources :receivings, only: [ :index, :new, :create, :edit, :update ]
 end
