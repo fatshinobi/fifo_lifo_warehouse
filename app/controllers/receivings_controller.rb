@@ -27,11 +27,13 @@ class ReceivingsController < Lintity::EntityListController
   # POST /receivings
   def create
     @receiving = Receiving.new(receiving_params)
-    if @receiving.save
-      redirect_to receivings_path, notice: "Receiving was successfully created."
-    else
-      render :new, status: :unprocessable_entity
-    end
+      if @receiving.save
+        # Trigger inventory processing when the receiving is in processed state
+        ReceivingProcess.new(@receiving).call if @receiving.processed?
+        redirect_to receivings_path, notice: "Receiving was successfully created."
+      else
+        render :new, status: :unprocessable_entity
+      end
   end
 
   # GET /receivings/:id/edit
@@ -42,11 +44,13 @@ class ReceivingsController < Lintity::EntityListController
   # PATCH/PUT /receivings/:id
   def update
     @receiving = Receiving.find(params[:id])
-    if @receiving.update(receiving_params)
-      redirect_to receivings_path, notice: "Receiving was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+      if @receiving.update(receiving_params)
+        # Trigger inventory processing when the receiving is in processed state
+        ReceivingProcess.new(@receiving).call if @receiving.processed?
+        redirect_to receivings_path, notice: "Receiving was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
   end
 
   private
