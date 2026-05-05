@@ -16,28 +16,32 @@
   </div>
 
   <h3 class="mt-4">Receiving Items</h3>
-  <%= f.fields_for :receiving_items do |ri| %>
-    <div class="nested-fields row g-2 align-items-end mb-2">
-      <div class="col-12 col-md-4">
-        <%= ri.label :item_id, class: "form-label" %>
-        <%= ri.collection_select :item_id, Item.all, :id, :name, {prompt: true}, class: "form-select" %>
-      </div>
-      <div class="col-12 col-md-2">
-        <%= ri.label :qty, class: "form-label" %>
-        <%= ri.number_field :qty, min: 1, class: "form-control" %>
-      </div>
-      <div class="col-12 col-md-2">
-        <%= ri.label :cost, class: "form-label" %>
-        <%= ri.number_field :cost, step: 0.01, class: "form-control" %>
-      </div>
-      <div class="col-auto">
-        <div class="form-check mt-2">
-          <%= ri.check_box :_destroy, class: "form-check-input" %>
-          <%= ri.label :_destroy, "Remove", class: "form-check-label" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <div id="receiving-items">
+    <%= f.fields_for :receiving_items do |ri| %>
+      <%= render partial: 'receiving_item_fields', locals: { f: ri } %>
+    <% end %>
+  </div>
+  <div class="mb-3">
+    <%= link_to 'Add Receiving Item', '#', id: 'add-receiving-item', class: 'btn btn-secondary' %>
+  </div>
+
+  <script type="text/template" id="receiving-item-template">
+    <%= f.fields_for :receiving_items, ReceivingItem.new, child_index: 'NEW_RECORD' do |ri| %>
+      <%= render partial: 'receiving_item_fields', locals: { f: ri } %>
+    <% end %>
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('receiving-items');
+      var template = document.getElementById('receiving-item-template').innerHTML;
+      document.getElementById('add-receiving-item').addEventListener('click', function(e) {
+        e.preventDefault();
+        var newId = new Date().getTime();
+        var content = template.replace(/NEW_RECORD/g, newId);
+        container.insertAdjacentHTML('beforeend', content);
+      });
+    });
+  </script>
 
   <div class="actions mt-3">
     <%= f.submit class: "btn btn-primary" %>
