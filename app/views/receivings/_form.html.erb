@@ -15,6 +15,11 @@
     <%= f.collection_select :storage_id, Storage.all, :id, :name, {prompt: true}, class: "form-select" %>
   </div>
 
+  <div class="mb-3 col-12 col-md-6">
+    <%= f.label :received_at, class: "form-label" %>
+    <%= f.datetime_local_field :received_at, class: "form-control", autocomplete: "off" %>
+  </div>
+
   <h3 class="mt-4">Receiving Items</h3>
   <div id="receiving-items">
     <%= f.fields_for :receiving_items do |ri| %>
@@ -41,6 +46,7 @@
         container.insertAdjacentHTML('beforeend', content);
       });
     });
+
   </script>
 
   <div class="actions mt-3">
