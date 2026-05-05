@@ -54,9 +54,9 @@ class ReceivingsController < Lintity::EntityListController
   # Define fields settings for the entity list according to project rules
   def init_fields
     @fields_settings = [
-      { field: "id", name: "ID", type: "edit", path: Proc.new { |item_id| edit_receiving_path(id: item_id) } },
-      { field: "storage_id", name: "Storage", type: "info" },
-      { field: "received_at", name: "Received At", type: "info" }
+      { field: "formatted_id", name: "ID", type: "edit", path: Proc.new { |item_id| edit_receiving_path(id: item_id) } },
+      { field: "storage_name", name: "Storage", type: "info" },
+      { field: "formatted_received_at", name: "Received At", type: "info" }
     ]
   end
 

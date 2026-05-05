@@ -53,7 +53,9 @@ class StoragesController < Lintity::EntityListController
 
   def init_fields
     @fields_settings = [
-      { field: "name", name: "Name", type: "edit", path: Proc.new { |storage_id| edit_storage_path(id: storage_id) } }
+      { field: "name", name: "Name", type: "edit", path: Proc.new { |storage_id| edit_storage_path(id: storage_id) } },
+      { field: "location", name: "Location", type: "info" },
+      { field: "description", name: "Description", type: "info" }
     ]
   end
 end
