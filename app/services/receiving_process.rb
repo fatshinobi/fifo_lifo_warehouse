@@ -15,19 +15,29 @@ class ReceivingProcess
   end
 
   def call
-    return unless @receiving.processed?
-    ActiveRecord::Base.transaction do
-      @receiving.receiving_items.find_each do |ri|
-        InventoryTransaction.create!(
-          item: ri.item,
-          storage: @receiving.storage,
-          qty: ri.qty,
-          cost: ri.cost,
-          batch_number: @receiving.formatted_id,
-          operation: @receiving,
-          transaction_time: Time.now
-        )
+    if @receiving.draft?
+      # Ensure no leftover inventory transactions when a receiving is saved as draft.
+      cleanup_if_draft
+    elsif @receiving.processed?
+      # Create inventory transactions for a processed receiving.
+      ActiveRecord::Base.transaction do
+        @receiving.receiving_items.find_each do |ri|
+          InventoryTransaction.create!(
+            item: ri.item,
+            storage: @receiving.storage,
+            qty: ri.qty,
+            cost: ri.cost,
+            batch_number: @receiving.formatted_id,
+            operation: @receiving,
+            transaction_time: Time.now
+          )
+        end
       end
     end
+  end
+
+  # Removes inventory transactions linked to the receiving when it is in draft state.
+  def cleanup_if_draft
+    InventoryTransaction.where(operation: @receiving).delete_all
   end
 end
