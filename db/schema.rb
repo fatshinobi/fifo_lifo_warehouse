@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_05_171212) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_05_180000) do
   create_table "inventory_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "batch_number"
     t.decimal "cost", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.bigint "item_id", null: false
+    t.bigint "operation_id"
+    t.string "operation_type"
     t.integer "qty"
     t.bigint "storage_id", null: false
     t.datetime "transaction_time"
@@ -23,6 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_171212) do
     t.index ["batch_number"], name: "index_inventory_transactions_on_batch_number"
     t.index ["item_id", "storage_id", "batch_number", "transaction_time"], name: "idx_on_item_id_storage_id_batch_number_transaction__288056d298"
     t.index ["item_id"], name: "index_inventory_transactions_on_item_id"
+    t.index ["operation_type", "operation_id"], name: "index_inventory_transactions_on_operation"
     t.index ["storage_id"], name: "index_inventory_transactions_on_storage_id"
     t.index ["transaction_time"], name: "index_inventory_transactions_on_transaction_time"
   end
