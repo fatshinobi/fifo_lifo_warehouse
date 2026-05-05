@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_05_112006) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_05_171212) do
+  create_table "inventory_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "batch_number"
+    t.decimal "cost", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.bigint "item_id", null: false
+    t.integer "qty"
+    t.bigint "storage_id", null: false
+    t.datetime "transaction_time"
+    t.datetime "updated_at", null: false
+    t.index ["batch_number"], name: "index_inventory_transactions_on_batch_number"
+    t.index ["item_id", "storage_id", "batch_number", "transaction_time"], name: "idx_on_item_id_storage_id_batch_number_transaction__288056d298"
+    t.index ["item_id"], name: "index_inventory_transactions_on_item_id"
+    t.index ["storage_id"], name: "index_inventory_transactions_on_storage_id"
+    t.index ["transaction_time"], name: "index_inventory_transactions_on_transaction_time"
+  end
+
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "cost", precision: 8, scale: 2
     t.datetime "created_at", null: false
@@ -66,6 +82,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_112006) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "inventory_transactions", "items"
+  add_foreign_key "inventory_transactions", "storages"
   add_foreign_key "receiving_items", "items"
   add_foreign_key "receiving_items", "receivings"
   add_foreign_key "receivings", "storages"
