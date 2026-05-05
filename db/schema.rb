@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_05_180000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_06_000000) do
   create_table "inventory_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "batch_number"
     t.decimal "cost", precision: 8, scale: 2
@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_180000) do
   create_table "receivings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "received_at"
+    t.integer "stock_state", default: 0, null: false
     t.bigint "storage_id", null: false
     t.datetime "updated_at", null: false
     t.index ["storage_id"], name: "index_receivings_on_storage_id"
