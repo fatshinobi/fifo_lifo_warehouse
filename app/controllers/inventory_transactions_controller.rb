@@ -10,7 +10,6 @@ class InventoryTransactionsController < Lintity::EntityListController
         InventoryTransaction.all
       end
     @entity_list_header_caption, @entity_list_new_path = "Inventory Transactions List", nil
-    init_fields
   end
 
   private
