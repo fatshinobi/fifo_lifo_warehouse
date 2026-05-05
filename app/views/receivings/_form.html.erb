@@ -1,8 +1,8 @@
-<%= form_with(model: @receiving, local: true) do |f| %>
+<%= form_with(model: @receiving, local: true, class: "row g-3") do |f| %>
   <% if @receiving.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@receiving.errors.count, "error") %> prohibited this receiving from being saved:</h2>
-      <ul>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(@receiving.errors.count, "error") %> prohibited this receiving from being saved:</h4>
+      <ul class="mb-0">
         <% @receiving.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -10,35 +10,40 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :storage_id %>
-    <%= f.collection_select :storage_id, Storage.all, :id, :name, prompt: true %>
+  <div class="mb-3 col-12 col-md-6">
+    <%= f.label :storage_id, class: "form-label" %>
+    <%= f.collection_select :storage_id, Storage.all, :id, :name, {prompt: true}, class: "form-select" %>
   </div>
 
-  <h3>Receiving Items</h3>
-  <%= f.fields_for :receiving_items do |ri| %>
-    <div class="nested-fields">
-      <div class="field">
-        <%= ri.label :item_id %>
-        <%= ri.collection_select :item_id, Item.all, :id, :name, prompt: true %>
-      </div>
-      <div class="field">
-        <%= ri.label :qty %>
-        <%= ri.number_field :qty, min: 1 %>
-      </div>
-      <div class="field">
-        <%= ri.label :cost %>
-        <%= ri.number_field :cost, step: 0.01 %>
-      </div>
-      <div class="field">
-        <%= ri.check_box :_destroy %>
-        <%= ri.label :_destroy, "Remove" %>
-      </div>
-    </div>
-  <% end %>
+  <h3 class="mt-4">Receiving Items</h3>
+  <div id="receiving-items">
+    <%= f.fields_for :receiving_items do |ri| %>
+      <%= render partial: 'receiving_item_fields', locals: { f: ri } %>
+    <% end %>
+  </div>
+  <div class="mb-3">
+    <%= link_to 'Add Receiving Item', '#', id: 'add-receiving-item', class: 'btn btn-secondary' %>
+  </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <script type="text/template" id="receiving-item-template">
+    <%= f.fields_for :receiving_items, ReceivingItem.new, child_index: 'NEW_RECORD' do |ri| %>
+      <%= render partial: 'receiving_item_fields', locals: { f: ri } %>
+    <% end %>
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('receiving-items');
+      var template = document.getElementById('receiving-item-template').innerHTML;
+      document.getElementById('add-receiving-item').addEventListener('click', function(e) {
+        e.preventDefault();
+        var newId = new Date().getTime();
+        var content = template.replace(/NEW_RECORD/g, newId);
+        container.insertAdjacentHTML('beforeend', content);
+      });
+    });
+  </script>
+
+  <div class="actions mt-3">
+    <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>
-
