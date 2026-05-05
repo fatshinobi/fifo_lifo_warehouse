@@ -1,0 +1,49 @@
+<%= form_with(model: @shipment, local: true) do |form| %>
+  <% if @shipment.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(@shipment.errors.count, "error") %> prohibited this shipment from being saved:</h4>
+      <ul>
+        <% @shipment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :shipped_at, class: "form-label" %>
+    <%= form.datetime_local_field :shipped_at, class: "form-control", autocomplete: "off" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :storage_id, "Storage", class: "form-label" %>
+    <%= form.collection_select :storage_id, Storage.all, :id, :name, { prompt: "Select Storage" }, { class: "form-select" } %>
+  </div>
+
+  <h5>Shipment Items</h5>
+  <%= form.fields_for :shipment_items do |item_fields| %>
+    <div class="row g-2 mb-2 align-items-end">
+      <div class="col-md-5">
+        <%= item_fields.label :item_id, "Item", class: "form-label" %>
+        <%= item_fields.collection_select :item_id, Item.all, :id, :name, { prompt: "Select Item" }, { class: "form-select" } %>
+      </div>
+      <div class="col-md-3">
+        <%= item_fields.label :qty, class: "form-label" %>
+        <%= item_fields.number_field :qty, class: "form-control", min: 1 %>
+      </div>
+      <div class="col-md-3">
+        <%= item_fields.label :price, class: "form-label" %>
+        <%= item_fields.number_field :price, class: "form-control", step: 0.01 %>
+      </div>
+      <div class="col-md-2">
+        <%= item_fields.check_box :_destroy %>
+        <%= item_fields.label :_destroy, "Remove", class: "form-check-label" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="actions mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+
