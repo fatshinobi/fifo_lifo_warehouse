@@ -29,7 +29,7 @@ class ReceivingsController < Lintity::EntityListController
     @receiving = Receiving.new(receiving_params)
       if @receiving.save
         # Trigger inventory processing when the receiving is in processed state
-        ReceivingProcess.new(@receiving).call if @receiving.processed?
+        ::ReceivingProcess.new(@receiving).call if @receiving.processed?
         redirect_to receivings_path, notice: "Receiving was successfully created."
       else
         render :new, status: :unprocessable_entity
@@ -46,7 +46,7 @@ class ReceivingsController < Lintity::EntityListController
     @receiving = Receiving.find(params[:id])
       if @receiving.update(receiving_params)
         # Trigger inventory processing when the receiving is in processed state
-        ReceivingProcess.new(@receiving).call if @receiving.processed?
+        ::ReceivingProcess.new(@receiving).call if @receiving.processed?
         redirect_to receivings_path, notice: "Receiving was successfully updated."
       else
         render :edit, status: :unprocessable_entity

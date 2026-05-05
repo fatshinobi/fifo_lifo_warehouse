@@ -25,7 +25,7 @@ class ReceivingProcess
           cost: ri.cost,
           batch_number: @receiving.formatted_id,
           operation: @receiving,
-          transaction_time: @receiving.received_at
+          transaction_time: Time.now
         )
       end
     end
