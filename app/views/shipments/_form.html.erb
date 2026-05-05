@@ -21,29 +21,34 @@
   </div>
 
   <h5>Shipment Items</h5>
-  <%= form.fields_for :shipment_items do |item_fields| %>
-    <div class="row g-2 mb-2 align-items-end">
-      <div class="col-md-5">
-        <%= item_fields.label :item_id, "Item", class: "form-label" %>
-        <%= item_fields.collection_select :item_id, Item.all, :id, :name, { prompt: "Select Item" }, { class: "form-select" } %>
-      </div>
-      <div class="col-md-3">
-        <%= item_fields.label :qty, class: "form-label" %>
-        <%= item_fields.number_field :qty, class: "form-control", min: 1 %>
-      </div>
-      <div class="col-md-3">
-        <%= item_fields.label :price, class: "form-label" %>
-        <%= item_fields.number_field :price, class: "form-control", step: 0.01 %>
-      </div>
-      <div class="col-md-2">
-        <%= item_fields.check_box :_destroy %>
-        <%= item_fields.label :_destroy, "Remove", class: "form-check-label" %>
-      </div>
-    </div>
-  <% end %>
+  <div id="shipment-items">
+    <%= form.fields_for :shipment_items do |item_fields| %>
+      <%= render partial: 'shipment_item_fields', locals: { f: item_fields } %>
+    <% end %>
+  </div>
+  <div class="mb-3">
+    <%= link_to 'Add Shipment Item', '#', id: 'add-shipment-item', class: 'btn btn-secondary' %>
+  </div>
+
+  <script type="text/template" id="shipment-item-template">
+    <%= form.fields_for :shipment_items, ShipmentItem.new, child_index: 'NEW_RECORD' do |item_fields| %>
+      <%= render partial: 'shipment_item_fields', locals: { f: item_fields } %>
+    <% end %>
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('shipment-items');
+      var template = document.getElementById('shipment-item-template').innerHTML;
+      document.getElementById('add-shipment-item').addEventListener('click', function(e) {
+        e.preventDefault();
+        var newId = new Date().getTime();
+        var content = template.replace(/NEW_RECORD/g, newId);
+        container.insertAdjacentHTML('beforeend', content);
+      });
+    });
+  </script>
 
   <div class="actions mb-3">
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
-
