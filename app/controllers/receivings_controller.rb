@@ -62,7 +62,7 @@ class ReceivingsController < Lintity::EntityListController
 
   def receiving_params
     params.require(:receiving).permit(
-      :storage_id, :received_at,
+      :storage_id, :received_at, :stock_state,
       receiving_items_attributes: %i[id item_id qty cost _destroy]
     )
   end
