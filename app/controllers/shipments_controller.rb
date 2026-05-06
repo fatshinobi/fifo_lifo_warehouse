@@ -10,7 +10,7 @@ class ShipmentsController < Lintity::EntityListController
       else
         Shipment.all
       end
-
+    @records = @records.includes(:storage)
     @entity_list_header_caption, @entity_list_new_path = "Shipments List", new_shipment_path
   end
 
