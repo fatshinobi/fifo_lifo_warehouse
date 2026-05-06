@@ -25,6 +25,10 @@ class ShipmentsController < Lintity::EntityListController
   def create
     @shipment = Shipment.new(shipment_params)
     if @shipment.save
+      # Trigger ShipmentProcess when stock_state changes (e.g., from draft to processed)
+      if @shipment.saved_change_to_stock_state?
+        ShipmentProcess.new(@shipment).call
+      end
       redirect_to shipments_path, notice: "Shipment was successfully created."
     else
       render :new
@@ -40,6 +44,10 @@ class ShipmentsController < Lintity::EntityListController
   def update
     @shipment = Shipment.find(params[:id])
     if @shipment.update(shipment_params)
+      # Trigger ShipmentProcess if stock_state was changed during the update
+      if @shipment.saved_change_to_stock_state?
+        ShipmentProcess.new(@shipment).call
+      end
       redirect_to shipments_path, notice: "Shipment was successfully updated."
     else
       render :edit
@@ -52,6 +60,7 @@ class ShipmentsController < Lintity::EntityListController
     params.require(:shipment).permit(
       :shipped_at,
       :storage_id,
+      :stock_state,
       shipment_items_attributes: [ :id, :item_id, :qty, :price, :_destroy ]
     )
   end

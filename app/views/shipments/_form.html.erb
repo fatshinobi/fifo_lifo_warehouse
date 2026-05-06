@@ -20,6 +20,11 @@
     <%= form.collection_select :storage_id, Storage.all, :id, :name, { prompt: "Select Storage" }, { class: "form-select" } %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :stock_state, class: "form-label" %>
+    <%= form.select :stock_state, Shipment.stock_states.keys.map { |k| [k.titleize, k] }, {}, class: "form-select" %>
+  </div>
+
   <h5>Shipment Items</h5>
   <div id="shipment-items">
     <%= form.fields_for :shipment_items do |item_fields| %>

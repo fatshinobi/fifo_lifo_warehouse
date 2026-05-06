@@ -2,4 +2,5 @@
   <h1 class="mb-4">Edit Shipment</h1>
   <%= render 'form' %>
   <%= link_to 'Back', shipments_path, class: "btn btn-link" %>
+  <%= link_to 'Transactions', inventory_transactions_path(operation_id: @shipment.id, operation_type: "Shipment"), class: "btn btn-link" if @shipment.processed? %>
 </div>
