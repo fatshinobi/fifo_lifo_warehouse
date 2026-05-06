@@ -12,7 +12,6 @@ class ShipmentsController < Lintity::EntityListController
       end
 
     @entity_list_header_caption, @entity_list_new_path = "Shipments List", new_shipment_path
-    init_fields
   end
 
   # GET /shipments/new
