@@ -41,6 +41,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 gem "lintity", path: "../lintity"
+gem "acts_as_fifo_lifo", path: "../acts_as_fifo_lifo"
 gem "cssbundling-rails"
 gem "bootstrap", "~> 5.3.3"
 
