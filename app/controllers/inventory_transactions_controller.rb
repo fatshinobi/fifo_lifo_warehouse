@@ -2,6 +2,9 @@ class InventoryTransactionsController < Lintity::EntityListController
   layout "application"
 
   def index
+    operation_id = params[:operation_id]
+    operation_type = params[:operation_type]
+
     @search_path = inventory_transactions_path
     @records =
       if @filter_field
@@ -9,6 +12,8 @@ class InventoryTransactionsController < Lintity::EntityListController
       else
         InventoryTransaction.all
       end
+
+    @records = @records.where(operation_id: operation_id, operation_type: operation_type)
     @entity_list_header_caption, @entity_list_new_path = "Inventory Transactions List", nil
   end
 
