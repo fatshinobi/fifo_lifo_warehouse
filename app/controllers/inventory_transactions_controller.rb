@@ -14,6 +14,8 @@ class InventoryTransactionsController < Lintity::EntityListController
       end
 
     @records = @records.where(operation_id: operation_id, operation_type: operation_type)
+    @records = @records.includes(:item, :storage)
+
     @entity_list_header_caption, @entity_list_new_path = "Inventory Transactions List", nil
   end
 

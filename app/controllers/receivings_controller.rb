@@ -12,9 +12,10 @@ class ReceivingsController < Lintity::EntityListController
       else
         Receiving.all
       end
+    @records = @records.includes(:storage)
+
     # Header caption and link to create new record
     @entity_list_header_caption, @entity_list_new_path = "Receivings List", new_receiving_path
-    # No explicit render – the parent controller will handle the entity list view
   end
 
   # GET /receivings/new
