@@ -25,6 +25,11 @@
     <%= f.datetime_local_field :transferred_at, class: "form-control", autocomplete: "off" %>
   </div>
 
+  <div class="mb-3 col-12 col-md-6">
+    <%= f.label :stock_state, class: "form-label" %>
+    <%= f.select :stock_state, Transfer.stock_states.keys.map { |k| [k.titleize, k] }, {}, class: "form-select" %>
+  </div>
+
   <h3 class="mt-4">Transfer Items</h3>
   <div id="transfer-items">
     <%= f.fields_for :transfer_items do |ti| %>
@@ -32,7 +37,7 @@
     <% end %>
   </div>
   <div class="mb-3">
-    <%= link_to 'Add Transfer Item', '#', id: 'add-transfer-item', class: 'btn btn-secondary' %>
+    <%= link_to 'Create Transfer Item', '#', id: 'add-transfer-item', class: 'btn btn-secondary' %>
   </div>
 
   <script type="text/template" id="transfer-item-template">
@@ -57,4 +62,3 @@
     <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>
-
