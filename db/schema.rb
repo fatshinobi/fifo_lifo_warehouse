@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_06_001000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_08_000001) do
   create_table "inventory_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "batch_number"
     t.decimal "cost", precision: 8, scale: 2
@@ -87,6 +87,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_001000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transfer_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "item_id", null: false
+    t.integer "qty"
+    t.bigint "transfer_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_transfer_items_on_item_id"
+    t.index ["transfer_id"], name: "index_transfer_items_on_transfer_id"
+  end
+
+  create_table "transfers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "stock_state", default: 0, null: false
+    t.bigint "storage_id", null: false
+    t.bigint "storage_to_id", null: false
+    t.datetime "transferred_at"
+    t.datetime "updated_at", null: false
+    t.index ["storage_id"], name: "index_transfers_on_storage_id"
+    t.index ["storage_to_id"], name: "fk_rails_abbffe7ec6"
+  end
+
   add_foreign_key "inventory_transactions", "items"
   add_foreign_key "inventory_transactions", "storages"
   add_foreign_key "receiving_items", "items"
@@ -95,4 +116,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_001000) do
   add_foreign_key "shipment_items", "items"
   add_foreign_key "shipment_items", "shipments"
   add_foreign_key "shipments", "storages"
+  add_foreign_key "transfer_items", "items"
+  add_foreign_key "transfer_items", "transfers"
+  add_foreign_key "transfers", "storages"
+  add_foreign_key "transfers", "storages", column: "storage_to_id"
 end
