@@ -1,6 +1,6 @@
 class Transfer < ApplicationRecord
   belongs_to :storage
-  belongs_to :storage_to
+  belongs_to :storage_to, class_name: "Storage"
   has_many :transfer_items, dependent: :destroy
   accepts_nested_attributes_for :transfer_items, allow_destroy: true
   # Enum for stock state with default values
