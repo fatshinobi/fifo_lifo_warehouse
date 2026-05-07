@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   resources :receivings, only: [ :index, :new, :create, :edit, :update ]
   resources :shipments, only: [ :index, :new, :create, :edit, :update ]
   resources :inventory_transactions, only: [ :index ]
+  resources :transfers, only: [ :index, :new, :create, :edit, :update ]
 end
