@@ -41,17 +41,15 @@
     <% end %>
   </script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var container = document.getElementById('receiving-items');
-      var template = document.getElementById('receiving-item-template').innerHTML;
-      document.getElementById('add-receiving-item').addEventListener('click', function(e) {
-        e.preventDefault();
-        var newId = new Date().getTime();
-        var content = template.replace(/NEW_RECORD/g, newId);
-        container.insertAdjacentHTML('beforeend', content);
-      });
-    });
+    var container = document.getElementById('receiving-items');
+    var template = document.getElementById('receiving-item-template').innerHTML;
 
+    document.getElementById('add-receiving-item').addEventListener('click', function(e) {
+      e.preventDefault();
+      var newId = new Date().getTime();
+      var content = template.replace(/NEW_RECORD/g, newId);
+      container.insertAdjacentHTML('beforeend', content);
+    });
   </script>
 
   <div class="actions mt-3">
