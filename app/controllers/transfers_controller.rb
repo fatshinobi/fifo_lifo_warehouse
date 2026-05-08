@@ -22,6 +22,10 @@ class TransfersController < Lintity::EntityListController
   def create
     @transfer = Transfer.new(transfer_params)
     if @transfer.save
+      # Trigger TransferProcess when stock_state changes (e.g., from draft to processed)
+      if @transfer.saved_change_to_stock_state?
+        TransferProcess.new(@transfer).call
+      end
       redirect_to transfers_path, notice: "Transfer was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -37,6 +41,10 @@ class TransfersController < Lintity::EntityListController
   def update
     @transfer = Transfer.find(params[:id])
     if @transfer.update(transfer_params)
+      # Trigger TransferProcess if stock_state was changed during the update
+      if @transfer.saved_change_to_stock_state?
+        TransferProcess.new(@transfer).call
+      end
       redirect_to transfers_path, notice: "Transfer was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -59,6 +67,7 @@ class TransfersController < Lintity::EntityListController
       :storage_id,
       :storage_to_id,
       :transferred_at,
+      :stock_state,
       transfer_items_attributes: [ :id, :item_id, :qty, :_destroy ]
     )
   end
