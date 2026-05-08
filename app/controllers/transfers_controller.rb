@@ -67,6 +67,7 @@ class TransfersController < Lintity::EntityListController
       :storage_id,
       :storage_to_id,
       :transferred_at,
+      :stock_state,
       transfer_items_attributes: [ :id, :item_id, :qty, :_destroy ]
     )
   end

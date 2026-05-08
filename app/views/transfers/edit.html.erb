@@ -1,4 +1,6 @@
-<h1>Edit Transfer</h1>
-<%= render partial: 'form' %>
-<%= link_to 'Transactions', inventory_transactions_path(operation_id: @transfer.id, operation_type: "Transfer"), class: "btn btn-link" if @transfer.processed? %>
-
+<div class="container mt-4">
+  <h1 class="mb-4">Edit Transfer</h1>
+  <%= render partial: 'form' %>
+  <%= link_to 'Back', transfers_path, class: "btn btn-link" %>
+  <%= link_to 'Transactions', inventory_transactions_path(operation_id: @transfer.id, operation_type: "Transfer"), class: "btn btn-link" if @transfer.processed? %>
+</div>
