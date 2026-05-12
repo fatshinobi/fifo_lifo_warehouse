@@ -5,6 +5,12 @@ class StockBalanceReportsController < Lintity::EntityReportController
     @entity_report_header_caption = "Stock Balance Report"
   end
 
+  # Show a form to select an Item and a Storage before displaying the report
+  def new
+    @items = Item.all
+    @storages = Storage.all
+  end
+
   private
 
   def init_fields
