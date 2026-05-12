@@ -1,18 +1,18 @@
-<h1>Stock Balance Report Filters</h1>
+<h1 class="mb-4">Stock Balance Report Filters</h1>
 
-<%= form_with url: stock_balance_reports_path, method: :get, local: true do |f| %>
-  <div class="field">
-    <%= f.label :item_id, "Item" %><br>
-    <%= f.select :item_id, options_from_collection_for_select(@items, :id, :name), include_blank: true %>
+<%= form_with url: stock_balance_reports_path, method: :get, local: true, class: "row g-3" do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :item_id, "Item", class: "form-label" %>
+    <%= f.select :item_id, options_from_collection_for_select(@items, :id, :name), { include_blank: true }, class: "form-select" %>
   </div>
 
-  <div class="field">
-    <%= f.label :storage_id, "Storage" %><br>
-    <%= f.select :storage_id, options_from_collection_for_select(@storages, :id, :name), include_blank: true %>
+  <div class="mb-3">
+    <%= f.label :storage_id, "Storage", class: "form-label" %>
+    <%= f.select :storage_id, options_from_collection_for_select(@storages, :id, :name), { include_blank: true }, class: "form-select" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Show Report" %>
+  <div class="col-12">
+    <%= f.submit "Show Report", class: "btn btn-primary" %>
   </div>
 <% end %>
-
