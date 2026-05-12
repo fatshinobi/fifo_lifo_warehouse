@@ -1,8 +1,16 @@
 class StockBalanceReportsController < Lintity::EntityReportController
   layout "application"
   def index
-    @records = InventoryTransaction.stock_balance_by_batches_calculation
+    storage_id = params[:storage_id]
+    item_id = params[:item_id]
+    @records = InventoryTransaction.stock_balance_by_batches_calculation(storage_id: storage_id, item_id: item_id)
     @entity_report_header_caption = "Stock Balance Report"
+  end
+
+  # Show a form to select an Item and a Storage before displaying the report
+  def new
+    @items = Item.all
+    @storages = Storage.all
   end
 
   private
