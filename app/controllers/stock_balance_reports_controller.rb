@@ -11,7 +11,7 @@ class StockBalanceReportsController < Lintity::EntityReportController
         storages: { include: :storage, field: :name }
       }
     )
-    byebug
+
     @entity_report_header_caption = "Stock Balance Report"
   end
 
