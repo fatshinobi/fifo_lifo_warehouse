@@ -1,9 +1,11 @@
-class StockBalanceReportsController < Lintity::EntityReportController
+class BasicStockBalanceReportsController < Lintity::EntityReportController
   layout "application"
+
+  # GET /basic_stock_balance_reports
   def index
     storage_id = params[:storage_id]
     item_id = params[:item_id]
-    @records = InventoryTransaction.stock_balance_by_batches_calculation(
+    @records = InventoryTransaction.stock_balance_by_items_calculation(
       storage_id: storage_id,
       item_id: item_id,
       fields_info: {
@@ -11,11 +13,10 @@ class StockBalanceReportsController < Lintity::EntityReportController
         storages: { include: :storage, field: :name }
       }
     )
-
-    @entity_report_header_caption = "Stock Balance Report"
+    @entity_report_header_caption = "Basic Stock Balance Report"
   end
 
-  # Show a form to select an Item and a Storage before displaying the report
+  # GET /basic_stock_balance_reports/new
   def new
     @items = Item.all
     @storages = Storage.all
@@ -26,8 +27,8 @@ class StockBalanceReportsController < Lintity::EntityReportController
   def init_fields
     @fields_settings = [
       { field: "item", type: "info" },
-      { field: "qty",  type: "number" },
-      { field: "cost",  type: "number" }
+      { field: "qty", type: "number" },
+      { field: "cost", type: "number" }
     ]
   end
 end

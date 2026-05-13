@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :inventory_transactions, only: [ :index ]
   resources :transfers, only: [ :index, :new, :create, :edit, :update ]
   resources :stock_balance_reports, only: [ :index, :new ]
+  resources :basic_stock_balance_reports, only: [ :index, :new ]
 end
