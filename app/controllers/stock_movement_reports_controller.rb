@@ -15,7 +15,6 @@ class StockMovementReportsController < Lintity::EntityReportController
   end
 
   def new
-    init_fields
     @items = Item.all
     @storages = Storage.all
   end
