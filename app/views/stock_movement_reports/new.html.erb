@@ -1,0 +1,15 @@
+<%= form_with url: stock_movement_reports_path, method: :get, local: true, class: "row g-3" do |f| %>
+  <div class="mb-3">
+    <%= f.label :item_id, "Item", class: "form-label" %>
+    <%= f.select :item_id, options_from_collection_for_select(@items, :id, :name), { include_blank: true }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :storage_id, "Storage", class: "form-label" %>
+    <%= f.select :storage_id, options_from_collection_for_select(@storages, :id, :name), { include_blank: true }, class: "form-select" %>
+  </div>
+
+  <div class="col-12">
+    <%= f.submit "Show Report", class: "btn btn-primary" %>
+  </div>
+<% end %>
