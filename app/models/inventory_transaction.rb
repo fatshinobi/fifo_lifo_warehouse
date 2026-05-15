@@ -1,5 +1,5 @@
 class InventoryTransaction < ApplicationRecord
-  acts_as_fifo item_field: :item_id, qty_field: :qty, cost_field: :cost, time_field: :transaction_time, batch_field: :batch_number, storage_field: :storage_id
+  acts_as_fifo item_field: :item_id, qty_field: :qty, cost_field: :cost, time_field: :transaction_time, batch_field: :batch_number, storage_field: :storage_id, operation_field: :operation_id, operation_type_field: :operation_type
 
   belongs_to :item
   belongs_to :storage
