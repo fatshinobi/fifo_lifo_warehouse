@@ -9,6 +9,16 @@
     <%= f.select :storage_id, options_from_collection_for_select(@storages, :id, :name), { include_blank: true }, class: "form-select" %>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :start_time, "Start time", class: "form-label" %>
+    <%= f.datetime_field :start_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :end_time, "End time", class: "form-label" %>
+    <%= f.datetime_field :end_time, class: "form-control" %>
+  </div>
+
   <div class="col-12">
     <%= f.submit "Show Report", class: "btn btn-primary" %>
   </div>
