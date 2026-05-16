@@ -5,9 +5,11 @@ class BasicStockBalanceReportsController < Lintity::EntityReportController
   def index
     storage_id = params[:storage_id]
     item_id = params[:item_id]
+    balance_time = params[:balance_time] || Time.current
     @records = InventoryTransaction.stock_balance_by_items_calculation(
       storage_id: storage_id,
       item_id: item_id,
+      to_time: balance_time,
       fields_info: {
         items: { include: :item, field: :name },
         storages: { include: :storage, field: :name }

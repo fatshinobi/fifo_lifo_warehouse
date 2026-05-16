@@ -8,6 +8,10 @@
     <%= f.label :storage_id, "Storage", class: "form-label" %>
     <%= f.select :storage_id, options_from_collection_for_select(@storages, :id, :name), { include_blank: true }, class: "form-select" %>
   </div>
+  <div class="mb-3">
+    <%= f.label :balance_time, "Balance Time", class: "form-label" %>
+    <%= f.datetime_field :balance_time, class: "form-control" %>
+  </div>
 
   <div class="col-12">
     <%= f.submit "Show Report", class: "btn btn-primary" %>
