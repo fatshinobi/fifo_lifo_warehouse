@@ -17,7 +17,17 @@ class StockBalanceReportsController < Lintity::EntityReportController
 
     # @entity_filter_header_caption is now set by before_action
 
-    @entity_report_header_caption = "Stock Balance Report"
+    @entity_report_header_caption, @entity_report_pdf_path = "Stock Balance Report", stock_balance_reports_path(format: :pdf, storage_id: storage_id, item_id: item_id, balance_time: balance_time)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "stock_balance_report_#{Time.current.to_i}", # The name of the downloaded file
+                template: 'lintity/entity_report/index',
+                layout: "layouts/pdf", # Optional: Use a specific layout
+                disposition: 'attachment' # Optional: Force download instead of inline view
+
+      end
+    end
   end
 
   # Show a form to select an Item and a Storage before displaying the report

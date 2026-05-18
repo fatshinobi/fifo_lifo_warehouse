@@ -21,11 +21,10 @@ class BasicStockBalanceReportsController < Lintity::EntityReportController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "filename_#{Time.current.to_i}", # The name of the downloaded file
+        render pdf: "basic_stock_balance_report_#{Time.current.to_i}", # The name of the downloaded file
                 template: 'lintity/entity_report/index',
                 layout: "layouts/pdf", # Optional: Use a specific layout
-                disposition: 'attachment', # Optional: Force download instead of inline view
-                show_as_html: false # Optional: Show HTML in browser for debugging
+                disposition: 'attachment' # Optional: Force download instead of inline view
 
       end
     end
