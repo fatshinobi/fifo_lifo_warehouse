@@ -6,6 +6,24 @@ class StockMovementReportsController < Lintity::EntityReportController
     end_time_value = params[:end_time].presence || Time.current.end_of_day
 
     @entity_report_header_caption = "Stock Movement Report"
+
+    # Build a description of the selected filters
+    filter_parts = []
+    if params[:storage_id].present?
+      storage_name = Storage.find_by(id: params[:storage_id])&.name
+      filter_parts << "Storage: #{storage_name}" if storage_name
+    end
+    if params[:item_id].present?
+      item_name = Item.find_by(id: params[:item_id])&.name
+      filter_parts << "Item: #{item_name}" if item_name
+    end
+    if params[:start_time].present?
+      filter_parts << "Start time: #{params[:start_time]}"
+    end
+    if params[:end_time].present?
+      filter_parts << "End time: #{params[:end_time]}"
+    end
+    @entity_filter_header_caption = "Filters: #{filter_parts.join(', ')}" if filter_parts.any?
     @records = InventoryTransaction.stock_movement_calculation(
       storage_id: params[:storage_id],
       item_id: params[:item_id],
