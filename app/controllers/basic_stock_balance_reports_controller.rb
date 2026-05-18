@@ -1,5 +1,6 @@
 class BasicStockBalanceReportsController < Lintity::EntityReportController
   layout "application"
+  before_action :set_entity_filter_header, only: [ :index ]
 
   # GET /basic_stock_balance_reports
   def index
@@ -15,20 +16,7 @@ class BasicStockBalanceReportsController < Lintity::EntityReportController
         storages: { include: :storage, field: :name }
       }
     )
-    # Construct filter description for header
-    filter_parts = []
-    if storage_id.present?
-      storage_name = Storage.find_by(id: storage_id)&.name
-      filter_parts << "Storage: #{storage_name}" if storage_name
-    end
-    if item_id.present?
-      item_name = Item.find_by(id: item_id)&.name
-      filter_parts << "Item: #{item_name}" if item_name
-    end
-    if params[:balance_time].present?
-      filter_parts << "Balance time: #{params[:balance_time]}"
-    end
-    @entity_filter_header_caption = filter_parts.empty? ? "" : "Filters: #{filter_parts.join(', ')}"
+    # @entity_filter_header_caption is now set by before_action
     @entity_report_header_caption = "Basic Stock Balance Report"
   end
 
@@ -39,6 +27,22 @@ class BasicStockBalanceReportsController < Lintity::EntityReportController
   end
 
   private
+
+  def set_entity_filter_header
+    filter_parts = []
+    if params[:storage_id].present?
+      storage_name = Storage.find_by(id: params[:storage_id])&.name
+      filter_parts << "Storage: #{storage_name}" if storage_name.present?
+    end
+    if params[:item_id].present?
+      item_name = Item.find_by(id: params[:item_id])&.name
+      filter_parts << "Item: #{item_name}" if item_name.present?
+    end
+    if params[:balance_time].present?
+      filter_parts << "Balance time: #{params[:balance_time]}"
+    end
+    @entity_filter_header_caption = "Filters: #{filter_parts.join(', ')}" if filter_parts.present?
+  end
 
   def init_fields
     @fields_settings = [
