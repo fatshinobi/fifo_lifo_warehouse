@@ -6,7 +6,7 @@ class StockMovementReportsController < Lintity::EntityReportController
     start_time_value = params[:start_time].presence || 1.month.ago.beginning_of_day
     end_time_value = params[:end_time].presence || Time.current.end_of_day
 
-    @entity_report_header_caption = "Stock Movement Report"
+    @entity_report_header_caption, @entity_report_pdf_path = "Stock Movement Report", stock_movement_reports_path(format: :pdf, storage_id: params[:storage_id], item_id: params[:item_id], start_time: start_time_value, end_time: end_time_value)
 
     @records = InventoryTransaction.stock_movement_calculation(
       storage_id: params[:storage_id],
@@ -18,6 +18,16 @@ class StockMovementReportsController < Lintity::EntityReportController
         storages: { include: :storage, field: :name }
       }
     )
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "stock_movement_report_#{Time.current.to_i}", # The name of the downloaded file
+                template: 'lintity/entity_report/index',
+                layout: "layouts/pdf", # Optional: Use a specific layout
+                disposition: 'attachment' # Optional: Force download instead of inline view
+
+      end
+    end
   end
 
   def new
