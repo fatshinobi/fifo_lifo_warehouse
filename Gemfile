@@ -44,6 +44,8 @@ gem "lintity", path: "../lintity"
 gem "acts_as_fifo_lifo", path: "../acts_as_fifo_lifo"
 gem "cssbundling-rails"
 gem "bootstrap", "~> 5.3.3"
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

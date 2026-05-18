@@ -17,7 +17,19 @@ class BasicStockBalanceReportsController < Lintity::EntityReportController
       }
     )
     # @entity_filter_header_caption is now set by before_action
-    @entity_report_header_caption = "Basic Stock Balance Report"
+    @entity_report_header_caption, @entity_report_pdf_path = "Basic Stock Balance Report", basic_stock_balance_reports_path(format: :pdf, storage_id: storage_id, item_id: item_id, balance_time: balance_time)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "filename_#{Time.current.to_i}", # The name of the downloaded file
+                template: 'lintity/entity_report/index',
+                layout: "layouts/pdf", # Optional: Use a specific layout
+                disposition: 'attachment', # Optional: Force download instead of inline view
+                show_as_html: false # Optional: Show HTML in browser for debugging
+
+      end
+    end
+
   end
 
   # GET /basic_stock_balance_reports/new
