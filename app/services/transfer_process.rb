@@ -33,7 +33,7 @@ class TransferProcess
     ActiveRecord::Base.transaction do
       @transfer.transfer_items.find_each do |ti|
         # Retrieve FIFO batches for the required quantity from the source storage
-        batches = InventoryTransaction.get_batches_for(ti.item_id, @transfer.storage_id, ti.qty)
+        batches = InventoryTransaction.get_batches_for(ti.item_id, @transfer.storage_id, ti.qty, method: ti.item.method)
         batches.each do |batch|
           # Outgoing transaction (source storage)
           InventoryTransaction.create!(

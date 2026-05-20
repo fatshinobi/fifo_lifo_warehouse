@@ -25,6 +25,11 @@
     <%= form.number_field :cost, step: 0.01, class: "form-control" %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :method, "Inventory Method", class: "form-label" %>
+    <%= form.select :method, Item.methods.keys.map { |m| [m.titleize, m] }, {}, class: "form-select" %>
+  </div>
+
   <div class="actions">
     <%= form.submit class: "btn btn-primary" %>
   </div>
