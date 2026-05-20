@@ -10,7 +10,9 @@ class EventsController < ApplicationController
 
     case custom_action
     when "recalculation"
-      RecalculationJob.perform_later
+      start_time = params[:start_time].presence || Time.current.beginning_of_month
+      end_time = params[:end_time].presence || Time.current.end_of_day
+      RecalculationJob.perform_later(start_time, end_time)
       head :ok
     else
       # Unknown action – respond with bad request
