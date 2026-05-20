@@ -68,10 +68,20 @@
                     </li>
                  </ul>
               </li>
+              <!-- Actions dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="actionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Actions
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
+                  <li><%= link_to 'Recalculate', new_recalculations_event_path, class: 'dropdown-item' %></li>
+                </ul>
+              </li>
          </ul>
         </div>
       </div>
     </nav>
+
     <%= yield %>
   </body>
 </html>
