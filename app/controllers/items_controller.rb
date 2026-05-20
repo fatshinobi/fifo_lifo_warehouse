@@ -46,13 +46,14 @@ class ItemsController < Lintity::EntityListController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :cost)
+    params.require(:item).permit(:name, :description, :cost, :method)
   end
 
   def init_fields
     @fields_settings = [
       { field: "name", name: "Name", type: "edit", path: Proc.new { |item_id| edit_item_path(id: item_id) } },
       { field: "description", name: "Description", type: "info" },
+      { field: "method", name: "Inventory Method", type: "info" },
       { field: "cost", name: "Cost", type: "numeric_filter" }
     ]
   end
