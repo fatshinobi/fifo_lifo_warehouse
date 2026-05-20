@@ -1,0 +1,17 @@
+<%= form_with url: recalculations_events_path, method: :post, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :start_time, "Start Time", class: "form-label" %>
+    <%= f.datetime_field :start_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :end_time, "End Time", class: "form-label" %>
+    <%= f.datetime_field :end_time, class: "form-control" %>
+  </div>
+
+  <%= f.hidden_field :event_action, value: "recalculation" %>
+
+  <div class="mt-3">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

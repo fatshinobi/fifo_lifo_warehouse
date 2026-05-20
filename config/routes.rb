@@ -23,4 +23,8 @@ Rails.application.routes.draw do
   resources :stock_balance_reports, only: [ :index, :new ]
   resources :basic_stock_balance_reports, only: [ :index, :new ]
   resources :stock_movement_reports, only: [ :index, :new ]
+  # Events endpoint – handles POST /events with custom :action parameter
+  resources :events, only: [ :create ]
+  # RecalculationsEvents – provides a form (new) and uses the create action from EventsController
+  resources :recalculations_events, only: [ :new, :create ]
 end
