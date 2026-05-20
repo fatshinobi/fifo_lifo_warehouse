@@ -22,10 +22,9 @@ class StockMovementReportsController < Lintity::EntityReportController
       format.html
       format.pdf do
         render pdf: "stock_movement_report_#{Time.current.to_i}", # The name of the downloaded file
-                template: 'lintity/entity_report/index',
+                template: "lintity/entity_report/index",
                 layout: "layouts/pdf", # Optional: Use a specific layout
-                disposition: 'attachment' # Optional: Force download instead of inline view
-
+                disposition: "attachment" # Optional: Force download instead of inline view
       end
     end
   end
@@ -58,7 +57,7 @@ class StockMovementReportsController < Lintity::EntityReportController
 
   def init_fields
     @fields_settings = [
-      { field: "item", type: "info" },
+      { field: "item", caption: "Storage/Item/Batch", type: "info" },
       { field: "qty", type: "number" },
       { field: "cost", type: "info" }
     ]
