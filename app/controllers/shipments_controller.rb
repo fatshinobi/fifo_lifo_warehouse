@@ -70,7 +70,8 @@ class ShipmentsController < Lintity::EntityListController
     @fields_settings = [
       { field: "formatted_id", name: "ID", type: "edit", path: Proc.new { |id| edit_shipment_path(id: id) } },
       { field: "storage_name", name: "Storage", type: "info" },
-      { field: "formatted_shipped_at", name: "Shipped At", type: "info" }
+      { field: "formatted_shipped_at", name: "Shipped At", type: "info" },
+      { field: "stock_state", name: "Stock State", type: "info" }
     ]
   end
 end

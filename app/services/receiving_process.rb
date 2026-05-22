@@ -15,10 +15,7 @@ class ReceivingProcess
   end
 
   def call
-    if @receiving.draft?
-      # Ensure no leftover inventory transactions when a receiving is saved as draft.
-      cleanup_if_draft
-    elsif @receiving.processed?
+    if @receiving.processed?
       # Create inventory transactions for a processed receiving.
       ActiveRecord::Base.transaction do
         @receiving.receiving_items.find_each do |ri|
@@ -29,10 +26,12 @@ class ReceivingProcess
             cost: ri.cost,
             batch_number: @receiving.formatted_id,
             operation: @receiving,
-            transaction_time: Time.now
+            transaction_time: @receiving.received_at
           )
         end
       end
+    else
+      cleanup_if_draft
     end
   end
 

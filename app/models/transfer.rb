@@ -1,10 +1,9 @@
 class Transfer < ApplicationRecord
+  include StockState
   belongs_to :storage
   belongs_to :storage_to, class_name: "Storage"
   has_many :transfer_items, dependent: :destroy
   accepts_nested_attributes_for :transfer_items, allow_destroy: true
-  # Enum for stock state with default values
-  enum :stock_state, { draft: 0, processed: 1 }
   # Validations to ensure required fields are present
   validates :transferred_at, presence: true
   validates :storage, presence: true
