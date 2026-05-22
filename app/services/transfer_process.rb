@@ -16,10 +16,10 @@ class TransferProcess
   end
 
   def call
-    if @transfer.draft?
-      cleanup_if_draft
-    elsif @transfer.processed?
+    if @transfer.processed?
       create_transactions
+    else
+      cleanup_if_draft
     end
   end
 

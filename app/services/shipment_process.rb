@@ -21,10 +21,10 @@ class ShipmentProcess
   end
 
   def call
-    if @shipment.draft?
-      cleanup_if_draft
-    elsif @shipment.processed?
+    if @shipment.processed?
       create_transactions
+    else
+      cleanup_if_draft
     end
   end
 
