@@ -38,7 +38,7 @@ class ShipmentProcess
     ActiveRecord::Base.transaction do
       @shipment.shipment_items.find_each do |si|
         # Retrieve FIFO batches for the required quantity
-        batches = InventoryTransaction.get_batches_for(si.item_id, @shipment.storage_id, si.qty, method: si.item.method)
+        batches = InventoryTransaction.get_batches_for(si.item_id, @shipment.storage_id, si.qty, @shipment.shipped_at, method: si.item.method)
         batches.each do |batch|
           InventoryTransaction.create!(
             item_id: si.item_id,
@@ -47,7 +47,7 @@ class ShipmentProcess
             cost: batch[:cost],
             batch_number: batch[:batch_number],
             operation: @shipment,
-            transaction_time: Time.now
+            transaction_time: @shipment.shipped_at
           )
         end
       end
