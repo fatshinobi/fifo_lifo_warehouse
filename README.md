@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Project Overview
 
-Things you may want to cover:
+This repository implements a **FIFO/LIFO warehouse management system** built with **Ruby on Rails**. The application provides a full‑stack solution for tracking inventory items, handling receiving and shipment processes, and generating various stock reports. It follows the **Lintity** architecture pattern, leveraging custom base controllers such as `Lintity::EntityListController` and `Lintity::EntityReportController` to standardize list and report functionalities across the system.
 
-* Ruby version
+Key capabilities include:
 
-* System dependencies
+* **Item catalog** – CRUD operations for items stored in the warehouse.
+* **Storage locations** – Manage multiple storages with location metadata.
+* **Receiving workflow** – Record incoming stock, automatically update item quantities, and maintain receiving items.
+* **Shipment workflow** – Process outgoing shipments, adjust stock levels, and track shipment items.
+* **Transfer workflow** – Move stock between storages while preserving FIFO/LIFO rules.
+* **Reporting** – Generate basic stock balance reports and detailed entity reports (e.g., stock movement, inventory transactions) using the `Lintity::EntityReportController` conventions.
+* **Background processing** – Recalculation jobs run asynchronously to keep stock states consistent.
 
-* Configuration
+## Getting Started
 
-* Database creation
+* **Ruby version** – See `.ruby-version`.
+* **System dependencies** – MySQL
 
-* Database initialization
+For detailed contribution guidelines, see the `CONTRIBUTING.md` file.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
