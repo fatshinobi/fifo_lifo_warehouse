@@ -58,7 +58,8 @@ class TransfersController < Lintity::EntityListController
       { field: "formatted_id", name: "ID", type: "edit", path: Proc.new { |id| edit_transfer_path(id: id) } },
       { field: "storage_name", name: "Source", type: "info" },
       { field: "storage_to_name", name: "Destination", type: "info" },
-      { field: "formatted_transferred_at", name: "Transferred At", type: "info" }
+      { field: "formatted_transferred_at", name: "Transferred At", type: "info" },
+      { field: "stock_state", name: "Stock State", type: "info" }
     ]
   end
 

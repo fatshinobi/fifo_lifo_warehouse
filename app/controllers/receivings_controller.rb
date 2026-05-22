@@ -61,7 +61,8 @@ class ReceivingsController < Lintity::EntityListController
     @fields_settings = [
       { field: "formatted_id", name: "ID", type: "edit", path: Proc.new { |item_id| edit_receiving_path(id: item_id) } },
       { field: "storage_name", name: "Storage", type: "info" },
-      { field: "formatted_received_at", name: "Received At", type: "info" }
+      { field: "formatted_received_at", name: "Received At", type: "info" },
+      { field: "stock_state", name: "Stock State", type: "info" }
     ]
   end
 
