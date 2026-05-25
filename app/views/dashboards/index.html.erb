@@ -55,3 +55,16 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <!-- Items Card -->
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header">Items</div>
+
+        <%= pie_chart @items_data.map { |record| [record.item.name, record.total_qty] } %>
+        <div class="card-body text-end">
+          <%= link_to 'See more...', items_stock_balance_reports_path, class: 'card-link' %>
+        </div>
+      </div>
+  </div>
+</div>
