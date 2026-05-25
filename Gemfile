@@ -47,6 +47,7 @@ gem "bootstrap", "~> 5.3.3"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 gem "sidekiq"
+gem "chartkick"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

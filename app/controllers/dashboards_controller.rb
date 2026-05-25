@@ -4,5 +4,8 @@ class DashboardsController < ApplicationController
     @receivings = Receiving.order(created_at: :desc).limit(10)
     @shipments  = Shipment.order(created_at: :desc).limit(10)
     @transfers  = Transfer.order(created_at: :desc).limit(10)
+    @items_data = InventoryTransaction.stock_balance_for_items(limit: 10, fields_info: {
+      items: { include: :item, field: :name }
+    })
   end
 end
