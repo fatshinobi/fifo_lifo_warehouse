@@ -57,15 +57,18 @@
                   Reports
                 </a>
                  <ul class="dropdown-menu">
-                   <li>
-                     <%= link_to 'Stock Balance Report', new_stock_balance_report_path, class: 'dropdown-item' %>
-                   </li>
                     <li>
-                      <%= link_to 'Basic Stock Balance Report', new_basic_stock_balance_report_path, class: 'dropdown-item' %>
+                      <%= link_to 'Stock Balance', new_stock_balance_report_path, class: 'dropdown-item' %>
                     </li>
-                    <li>
-                      <%= link_to 'Stock Movement', new_stock_movement_report_path, class: 'dropdown-item' %>
-                    </li>
+                     <li>
+                       <%= link_to 'Basic Stock Balance', new_basic_stock_balance_report_path, class: 'dropdown-item' %>
+                     </li>
+                     <li>
+                       <%= link_to 'Stock Movement', new_stock_movement_report_path, class: 'dropdown-item' %>
+                     </li>
+                     <li>
+                       <%= link_to 'Items Stock Balance', new_items_stock_balance_report_path, class: 'dropdown-item' %>
+                     </li>
                  </ul>
               </li>
               <!-- Actions dropdown -->
