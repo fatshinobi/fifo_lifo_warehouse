@@ -27,4 +27,7 @@ Rails.application.routes.draw do
   resources :events, only: [ :create ]
   # RecalculationsEvents – provides a form (new) and uses the create action from EventsController
   resources :recalculations_events, only: [ :new, :create ]
+
+  # Dashboard route
+  get "dashboard", to: "dashboards#index"
 end
