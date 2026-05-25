@@ -9,7 +9,7 @@ class ItemsStockBalanceReportsController < Lintity::EntityReportController
 
   def index
     @search_path = items_stock_balance_reports_path
-    @entity_report_header_caption = "Items Stock Balance Report"
+    @entity_report_header_caption, @entity_report_pdf_path = "Items Stock Balance Report", items_stock_balance_reports_path(format: :pdf, item_id: params[:item_id], balance_time: params[:balance_time])
 
     @item_id = params[:item_id]
     @balance_time = params[:balance_time]
@@ -21,6 +21,15 @@ class ItemsStockBalanceReportsController < Lintity::EntityReportController
         items: { include: :item, field: :name }
       }
     )
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "items_stock_balance_report_#{Time.current.to_i}", # The name of the downloaded file
+                template: "lintity/entity_report/index",
+                layout: "layouts/pdf", # Optional: Use a specific layout
+                disposition: "attachment" # Optional: Force download instead of inline view
+      end
+    end
   end
 
   private
