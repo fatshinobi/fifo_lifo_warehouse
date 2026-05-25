@@ -1,6 +1,4 @@
 class DashboardsController < ApplicationController
-  layout "application"
-
   def index
     # Fetch the last 10 records for each entity to display on the dashboard
     @receivings = Receiving.order(created_at: :desc).limit(10)
