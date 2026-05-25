@@ -1,2 +1,57 @@
 <h1>Dashboard</h1>
-<p>Welcome to the dashboard. Add your summary widgets here.</p>
+
+<div class="row">
+  <!-- Receivings Card -->
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header">Receivings</div>
+      <ul class="list-group list-group-flush">
+        <% @receivings.each do |receiving| %>
+          <li class="list-group-item">
+            <%= link_to "Receiving ##{receiving.id}", edit_receiving_path(receiving) %>
+            <small class="text-muted"><%= receiving.created_at.strftime('%Y-%m-%d') %></small>
+          </li>
+        <% end %>
+      </ul>
+      <div class="card-body text-end">
+        <%= link_to 'See more...', receivings_path, class: 'card-link' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipments Card -->
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header">Shipments</div>
+      <ul class="list-group list-group-flush">
+        <% @shipments.each do |shipment| %>
+          <li class="list-group-item">
+            <%= link_to "Shipment ##{shipment.id}", edit_shipment_path(shipment) %>
+            <small class="text-muted"><%= shipment.created_at.strftime('%Y-%m-%d') %></small>
+          </li>
+        <% end %>
+      </ul>
+      <div class="card-body text-end">
+        <%= link_to 'See more...', shipments_path, class: 'card-link' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transfers Card -->
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header">Transfers</div>
+      <ul class="list-group list-group-flush">
+        <% @transfers.each do |transfer| %>
+          <li class="list-group-item">
+            <%= link_to "Transfer ##{transfer.id}", edit_transfer_path(transfer) %>
+            <small class="text-muted"><%= transfer.created_at.strftime('%Y-%m-%d') %></small>
+          </li>
+        <% end %>
+      </ul>
+      <div class="card-body text-end">
+        <%= link_to 'See more...', transfers_path, class: 'card-link' %>
+      </div>
+    </div>
+  </div>
+</div>
