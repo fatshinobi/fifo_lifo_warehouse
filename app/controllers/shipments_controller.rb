@@ -49,9 +49,9 @@ class ShipmentsController < Lintity::EntityListController
         ShipmentProcess.new(@shipment).call
       end
       redirect_to shipments_path, notice: "Shipment was successfully updated."
-    else
-      render :edit
-    end
+      else
+        render :edit, status: :unprocessable_entity
+      end
   end
 
   private
