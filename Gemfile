@@ -67,6 +67,7 @@ group :development, :test do
   gem "rails-controller-testing", group: :test
   gem "dotenv"
   gem "byebug"
+  gem "factory_bot_rails"
 end
 
 group :development do

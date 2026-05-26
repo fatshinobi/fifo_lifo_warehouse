@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe ReceivingsController, type: :controller do
-  let!(:storage) { Storage.create!(name: "Main Warehouse") }
+  # Use factory_bot to create a storage record instead of direct model creation
+  let!(:storage) { create(:storage) }
 
   describe "POST #create" do
     context "with valid parameters" do
@@ -12,7 +13,7 @@ RSpec.describe ReceivingsController, type: :controller do
             received_at: Time.current,
             stock_state: "draft",
             receiving_items_attributes: [
-              { item_id: Item.create!(name: "Test Item").id, qty: 10, cost: 5.0 }
+               { item_id: create(:item).id, qty: 10, cost: 5.0 }
             ]
           }
         }

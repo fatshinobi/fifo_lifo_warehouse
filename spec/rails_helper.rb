@@ -45,6 +45,11 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Include FactoryBot syntax methods so factories can be used without the
+  # explicit `FactoryBot.` prefix (e.g., `create(:storage)`). This resolves the
+  # `undefined method 'create'` errors in controller specs.
+  config.include FactoryBot::Syntax::Methods
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
