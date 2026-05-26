@@ -63,6 +63,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "rspec-rails"
+  # Required for controller specs that use render_template and related helpers
+  gem "rails-controller-testing", group: :test
   gem "dotenv"
   gem "byebug"
 end
