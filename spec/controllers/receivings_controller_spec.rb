@@ -60,7 +60,50 @@ RSpec.describe ReceivingsController, type: :controller do
       it "does not create a Receiving and re-renders the new template" do
         expect { post :create, params: invalid_params }.not_to change(Receiving, :count)
         expect(response).to render_template(:new)
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+  end
+
+  describe "PATCH #update" do
+    let!(:receiving) { create(:receiving, storage: storage, stock_state: "draft") }
+
+    context "with valid parameters" do
+      let(:valid_update_params) do
+        {
+          id: receiving.id,
+          receiving: {
+            stock_state: "processed",
+            receiving_items_attributes: receiving.receiving_items.map do |ri|
+              { id: ri.id, qty: ri.qty + 1, _destroy: false }
+            end
+          }
+        }
+      end
+
+      it "updates the Receiving and redirects to index" do
+        # Stub the service to verify it is invoked without executing its internals
+        receiving_instance = instance_double("ReceivingProcess")
+        expect(::ReceivingProcess).to receive(:new).with(an_instance_of(Receiving)).and_return(receiving_instance)
+        expect(receiving_instance).to receive(:call)
+
+        patch :update, params: valid_update_params
+        receiving.reload
+        expect(response).to redirect_to(receivings_path)
+        expect(flash[:notice]).to eq("Receiving was successfully updated.")
+        expect(receiving.stock_state).to eq("processed")
+      end
+    end
+
+    context "with invalid parameters" do
+      let(:invalid_update_params) do
+        { id: receiving.id, receiving: { storage_id: nil } }
+      end
+
+      it "does not update the Receiving and re-renders edit" do
+        patch :update, params: invalid_update_params
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
