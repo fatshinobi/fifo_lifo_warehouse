@@ -2,35 +2,51 @@ require 'rails_helper'
 
 RSpec.describe ShipmentProcess, type: :service do
   let(:storage) { create(:storage) }
-  let(:item)    { create(:item) }
+  # Create an item that uses FIFO inventory method
+  let(:item)    { create(:item, inventory_method: :fifo) }
 
   describe '#call' do
     context 'when shipment is processed' do
-      let(:shipment) do
-        create(:shipment, :processed, storage: storage, items_count: 2)
-      end
-
-      before do
-        # Stub FIFO batch allocation to return deterministic batches
-        allow(InventoryTransaction).to receive(:get_batches_for) do |_item_id, _storage_id, qty, _shipped_at, method: _method|
-          Array.new(qty) { |i| { qty: 1, cost: 10.0, batch_number: "BATCH#{i + 1}" } }
+        let(:shipment) do
+          # Shipment with a single shipment_item of qty 8 (items_count is not used for qty)
+          create(:shipment, :processed, storage: storage, items_count: 1)
         end
-      end
+
+        before do
+          # Stub FIFO batch allocation to simulate two batches: older (qty 3) and newer (qty 10)
+          allow(InventoryTransaction).to receive(:get_batches_for) do |_item_id, _storage_id, qty, _shipped_at, method: _method|
+            # Return an array of batch hashes that sum to the requested qty (8)
+            # Older batch first
+            [ { qty: 3, cost: 10.0, batch_number: "OLD_BATCH" },
+             { qty: 5, cost: 10.0, batch_number: "NEW_BATCH" } ]
+          end
+        end
 
       it 'creates an InventoryTransaction for each shipment_item batch' do
-        expect { ShipmentProcess.new(shipment).call }
-          .to change(InventoryTransaction, :count).by(2)
+          expect { ShipmentProcess.new(shipment).call }
+            .to change(InventoryTransaction, :count).by(2)
 
         shipment_item = shipment.shipment_items.first
-        transaction = InventoryTransaction.where(operation: shipment).first
+          # Two transactions should be created – one for each batch
+          transactions = InventoryTransaction.where(operation: shipment).order(:id)
+          expect(transactions.size).to eq(2)
 
-        expect(transaction.item.id).to eq(shipment_item.item.id)
-        expect(transaction.storage.id).to eq(storage.id)
-        expect(transaction.qty).to eq(-1) # negative because items leave storage
-        expect(transaction.cost).to eq(10.0)
-        expect(transaction.batch_number).to start_with('BATCH')
-        expect(transaction.operation.id).to eq(shipment.id)
-        expect(transaction.transaction_time).to eq(shipment.shipped_at)
+          older_tx, newer_tx = transactions
+
+          expect(older_tx.item.id).to eq(shipment_item.item.id)
+          expect(older_tx.storage.id).to eq(storage.id)
+          expect(older_tx.qty).to eq(-3)
+          expect(older_tx.batch_number).to eq('OLD_BATCH')
+
+          expect(newer_tx.item.id).to eq(shipment_item.item.id)
+          expect(newer_tx.storage.id).to eq(storage.id)
+          expect(newer_tx.qty).to eq(-5)
+          expect(newer_tx.batch_number).to eq('NEW_BATCH')
+
+          expect(older_tx.operation.id).to eq(shipment.id)
+          expect(newer_tx.operation.id).to eq(shipment.id)
+          expect(older_tx.transaction_time).to eq(shipment.shipped_at)
+          expect(newer_tx.transaction_time).to eq(shipment.shipped_at)
       end
     end
 
