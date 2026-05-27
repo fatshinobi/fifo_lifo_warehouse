@@ -64,4 +64,40 @@ RSpec.describe ShipmentProcess, type: :service do
       end
     end
   end
+
+  describe '#call LIFO' do
+    let(:lifo_item) { create(:item, method: :lifo) }
+
+    let(:shipment) do
+      # Shipment with a single shipment_item of qty 11 for LIFO test
+      create(:shipment, :processed, storage: storage, items_count: 1)
+    end
+
+    before do
+      # Stub LIFO batch allocation: newer batch first, then older batch
+      allow(InventoryTransaction).to receive(:get_batches_for) do |_item_id, _storage_id, qty, _shipped_at, method: _method|
+        [ { qty: 10, cost: 10.0, batch_number: "NEW_BATCH" },
+          { qty: 1, cost: 10.0, batch_number: "OLD_BATCH" } ]
+      end
+    end
+
+    it 'creates correct LIFO InventoryTransaction records' do
+      # Adjust shipment_item to use lifo_item and qty 11
+      shipment_item = shipment.shipment_items.first
+      shipment_item.update!(item: lifo_item, qty: 11)
+
+      expect { ShipmentProcess.new(shipment).call }
+        .to change(InventoryTransaction, :count).by(2)
+
+      transactions = InventoryTransaction.where(operation: shipment).order(:id)
+      expect(transactions.size).to eq(2)
+
+      newer_tx, older_tx = transactions
+
+      expect(newer_tx.qty).to eq(-10)
+      expect(newer_tx.batch_number).to eq('NEW_BATCH')
+      expect(older_tx.qty).to eq(-1)
+      expect(older_tx.batch_number).to eq('OLD_BATCH')
+    end
+  end
 end
