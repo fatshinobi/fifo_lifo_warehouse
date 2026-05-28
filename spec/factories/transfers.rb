@@ -12,6 +12,14 @@ FactoryBot.define do
     after(:create) do |transfer, evaluator|
       create_list(:transfer_item, evaluator.items_count, transfer: transfer)
     end
+
+    trait :processed do
+      stock_state { "processed" }
+    end
+
+    trait :draft do
+      stock_state { "draft" }
+    end
   end
 
   factory :transfer_item do
