@@ -27,13 +27,10 @@ class RecalculationProcess
       case record
       when Receiving
         ReceivingProcess.new(record).call
-        record.update!(stock_state: :processed)
       when Shipment
         ShipmentProcess.new(record).call
-        record.update!(stock_state: :processed)
       when Transfer
         TransferProcess.new(record).call
-        record.update!(stock_state: :processed)
       end
     end
   end
