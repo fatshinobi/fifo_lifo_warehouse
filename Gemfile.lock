@@ -9,6 +9,7 @@ PATH
   specs:
     lintity (0.1.0)
       importmap-rails
+      pagy
       rails (~> 8.0, >= 8.1.3)
       wicked_pdf
       wkhtmltopdf-binary
@@ -231,6 +232,10 @@ GEM
     nokogiri (1.19.3-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.3)
+    pagy (43.5.5)
+      json
+      uri
+      yaml
     parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -415,6 +420,7 @@ GEM
       activesupport
       ostruct
     wkhtmltopdf-binary (0.12.6.10)
+    yaml (0.4.0)
     zeitwerk (2.7.5)
 
 PLATFORMS
@@ -445,6 +451,7 @@ DEPENDENCIES
   letter_opener
   lintity!
   mysql2 (~> 0.5)
+  pagy
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.3)

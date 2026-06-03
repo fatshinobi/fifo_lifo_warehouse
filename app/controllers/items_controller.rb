@@ -10,6 +10,8 @@ class ItemsController < Lintity::EntityListController
         Item.all
       end
 
+    @pagy, @records = pagy(:offset, @records)
+
     @entity_list_header_caption, @entity_list_new_path = "Items List", new_item_path
   end
 

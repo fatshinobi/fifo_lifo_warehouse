@@ -11,6 +11,7 @@ class ShipmentsController < Lintity::EntityListController
         Shipment.all
       end
     @records = @records.includes(:storage)
+    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Shipments List", new_shipment_path
   end
 
