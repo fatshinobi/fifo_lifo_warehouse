@@ -11,6 +11,7 @@ class StoragesController < Lintity::EntityListController
         Storage.all
       end
 
+    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Storages List", new_storage_path
     super
   end

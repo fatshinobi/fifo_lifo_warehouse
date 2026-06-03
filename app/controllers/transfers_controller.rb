@@ -9,6 +9,7 @@ class TransfersController < Lintity::EntityListController
     else
       Transfer.all
     end
+    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Transfers List", new_transfer_path
   end
 

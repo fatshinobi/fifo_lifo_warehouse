@@ -13,6 +13,7 @@ class ReceivingsController < Lintity::EntityListController
         Receiving.all
       end
     @records = @records.includes(:storage)
+    @pagy, @records = pagy(:offset, @records)
 
     # Header caption and link to create new record
     @entity_list_header_caption, @entity_list_new_path = "Receivings List", new_receiving_path
