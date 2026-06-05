@@ -6,12 +6,7 @@ class InventoryTransactionsController < Lintity::EntityListController
     operation_type = params[:operation_type]
 
     @search_path = inventory_transactions_path
-    @records =
-      if @filter_field
-        InventoryTransaction.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        InventoryTransaction.all
-      end
+    @records = InventoryTransaction.all
 
     @records = @records.where(operation_id: operation_id, operation_type: operation_type)
     @records = @records.includes(:item, :storage)

@@ -66,12 +66,7 @@ class ReceivingsController < Lintity::EntityListController
   end
 
   def init_records
-    @records =
-      if @filter_field
-        Receiving.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Receiving.all
-      end
+    @records = Receiving.all
     @records = @records.includes(:storage)
   end
 end
