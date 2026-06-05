@@ -55,7 +55,7 @@ class ItemsController < Lintity::EntityListController
   def init_records
     @records =
       if @filter_field && valid_filter_field?
-        Item.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+        Item.where(Item.arel_table[@filter_field].public_send(valid_filter_sign, @filter_value))
       else
         Item.all
       end
@@ -63,5 +63,18 @@ class ItemsController < Lintity::EntityListController
 
   def valid_filter_field?
     @fields_settings.map { |f| f[:field] }.include?(@filter_field) && %(= <= >=).include?(@filter_sign)
+  end
+
+  def valid_filter_sign
+    case @filter_sign
+    when "="
+      "eq"
+    when "<="
+      "lteq"
+    when ">="
+      "gteq"
+    else
+      nil
+    end
   end
 end
