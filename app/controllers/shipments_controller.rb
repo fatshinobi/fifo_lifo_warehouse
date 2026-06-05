@@ -69,12 +69,7 @@ class ShipmentsController < Lintity::EntityListController
   end
 
   def init_records
-    @records =
-      if @filter_field
-        Shipment.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Shipment.all
-      end
+    @records = Shipment.all
     @records = @records.includes(:storage)
   end
 end

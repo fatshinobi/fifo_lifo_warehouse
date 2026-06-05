@@ -54,10 +54,14 @@ class ItemsController < Lintity::EntityListController
 
   def init_records
     @records =
-      if @filter_field
+      if @filter_field && valid_filter_field?
         Item.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
       else
         Item.all
       end
+  end
+
+  def valid_filter_field?
+    @fields_settings.map { |f| f[:field] }.include?(@filter_field) && %(= <= >=).include?(@filter_sign)
   end
 end
