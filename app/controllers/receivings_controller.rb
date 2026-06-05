@@ -5,15 +5,6 @@ class ReceivingsController < Lintity::EntityListController
   def index
     # Path for search helpers
     @search_path = receivings_path
-    # Initialize records according to possible filter fields
-    @records =
-      if @filter_field
-        Receiving.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Receiving.all
-      end
-    @records = @records.includes(:storage)
-    @pagy, @records = pagy(:offset, @records)
 
     # Header caption and link to create new record
     @entity_list_header_caption, @entity_list_new_path = "Receivings List", new_receiving_path
@@ -72,5 +63,15 @@ class ReceivingsController < Lintity::EntityListController
       :storage_id, :received_at, :stock_state,
       receiving_items_attributes: %i[id item_id qty cost _destroy]
     )
+  end
+
+  def init_records
+    @records =
+      if @filter_field
+        Receiving.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+      else
+        Receiving.all
+      end
+    @records = @records.includes(:storage)
   end
 end

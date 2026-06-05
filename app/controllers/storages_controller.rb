@@ -4,14 +4,6 @@ class StoragesController < Lintity::EntityListController
 
   def index
     @search_path = storages_path
-    @records =
-      if @filter_field
-        Storage.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Storage.all
-      end
-
-    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Storages List", new_storage_path
     super
   end
@@ -58,5 +50,14 @@ class StoragesController < Lintity::EntityListController
       { field: "location", name: "Location", type: "info" },
       { field: "description", name: "Description", type: "info" }
     ]
+  end
+
+  def init_records
+    @records =
+      if @filter_field
+        Storage.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+      else
+        Storage.all
+      end
   end
 end
