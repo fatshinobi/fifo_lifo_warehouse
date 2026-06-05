@@ -4,14 +4,6 @@ class ShipmentsController < Lintity::EntityListController
   # GET /shipments
   def index
     @search_path = shipments_path
-    @records =
-      if @filter_field
-        Shipment.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Shipment.all
-      end
-    @records = @records.includes(:storage)
-    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Shipments List", new_shipment_path
   end
 
@@ -50,9 +42,9 @@ class ShipmentsController < Lintity::EntityListController
         ShipmentProcess.new(@shipment).call
       end
       redirect_to shipments_path, notice: "Shipment was successfully updated."
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
@@ -74,5 +66,15 @@ class ShipmentsController < Lintity::EntityListController
       { field: "formatted_shipped_at", name: "Shipped At", type: "info" },
       { field: "stock_state", name: "Stock State", type: "info" }
     ]
+  end
+
+  def init_records
+    @records =
+      if @filter_field
+        Shipment.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+      else
+        Shipment.all
+      end
+    @records = @records.includes(:storage)
   end
 end

@@ -4,12 +4,6 @@ class TransfersController < Lintity::EntityListController
   # GET /transfers
   def index
     @search_path = transfers_path
-    @records = if @filter_field
-      Transfer.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-    else
-      Transfer.all
-    end
-    @pagy, @records = pagy(:offset, @records)
     @entity_list_header_caption, @entity_list_new_path = "Transfers List", new_transfer_path
   end
 
@@ -72,5 +66,13 @@ class TransfersController < Lintity::EntityListController
       :stock_state,
       transfer_items_attributes: [ :id, :item_id, :qty, :_destroy ]
     )
+  end
+
+  def init_records
+    @records = if @filter_field
+      Transfer.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+    else
+      Transfer.all
+    end
   end
 end

@@ -3,14 +3,6 @@ class ItemsController < Lintity::EntityListController
   layout "application"
   def index
     @search_path = items_path
-    @records =
-      if @filter_field
-        Item.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
-      else
-        Item.all
-      end
-
-    @pagy, @records = pagy(:offset, @records)
 
     @entity_list_header_caption, @entity_list_new_path = "Items List", new_item_path
   end
@@ -58,5 +50,14 @@ class ItemsController < Lintity::EntityListController
       { field: "method", name: "Inventory Method", type: "info" },
       { field: "cost", name: "Cost", type: "numeric_filter" }
     ]
+  end
+
+  def init_records
+    @records =
+      if @filter_field
+        Item.where("#{@filter_field} #{@filter_sign} ?", @filter_value.to_i)
+      else
+        Item.all
+      end
   end
 end
