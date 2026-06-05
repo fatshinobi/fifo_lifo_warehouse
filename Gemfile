@@ -40,8 +40,8 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-gem "lintity", path: "../lintity"
-gem "acts_as_fifo_lifo", path: "../acts_as_fifo_lifo"
+gem "lintity", "~> 0.2.0"
+gem "acts_as_fifo_lifo"
 gem "cssbundling-rails"
 gem "bootstrap", "~> 5.3.3"
 gem "wicked_pdf"
