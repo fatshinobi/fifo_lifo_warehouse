@@ -16,7 +16,7 @@ Key capabilities include:
 
 ## Demo video
   * FIFO logic:
-[![FIFO logic](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)
+[![FIFO logic](https://github.com/user-attachments/assets/4b9b139e-95d4-47ee-a849-96f46a32ed0b)](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)
 
   * LIFO logic:
 [![LIFO logic](https://www.youtube.com/watch?v=eTGfoYHL3V4)](https://www.youtube.com/watch?v=eTGfoYHL3V4)
