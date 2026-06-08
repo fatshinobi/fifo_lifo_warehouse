@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-This repository implements a **FIFO/LIFO warehouse management system** built with **Ruby on Rails**. The application provides a full‑stack solution for tracking inventory items, handling receiving and shipment processes, and generating various stock reports. It follows the **Lintity** architecture pattern, leveraging custom base controllers such as `Lintity::EntityListController` and `Lintity::EntityReportController` to standardize list and report functionalities across the system.
+This repository implements a **FIFO/LIFO warehouse management system** built with **Ruby on Rails**. The application provides a full‑stack solution for tracking inventory items, handling receiving and shipment processes, and generating various stock reports. It follows the [lintity gem](https://github.com/fatshinobi/lintity) architecture pattern.
+The project applies FILFO LIFO logic implementation in [acts_as_fifo_lifo gem](https://github.com/fatshinobi/acts_as_fifo_lifo)
 
 Key capabilities include:
 
@@ -23,6 +24,18 @@ Key capabilities include:
 
   * Recalculation feature:
 [![Recalculation feature](https://github.com/user-attachments/assets/c90ed762-8899-40d4-b4fb-047ed6786128)](https://www.youtube.com/watch?v=UXhjoJGGBEk)
+
+## Application features
+* **Item catalog**
+| List | Form |
+| --- | --- | --- |
+| [![Items List](https://github.com/user-attachments/assets/dd0a71c3-c117-46d4-b20f-9c5d0e6a3386)](https://github.com/user-attachments/assets/fe851348-32a5-400e-b42d-79d73e08a5a4) | [![Item Form](https://github.com/user-attachments/assets/2103e3c6-9c23-4492-b52b-bfefeee6976a)](https://github.com/user-attachments/assets/e4fff78c-f986-4b4f-81c0-ab80484152f4) |
+
+* **Storage locations**
+* **Receiving workflow**
+* **Shipment workflow**
+* **Transfer workflow**
+* **Reporting**
 
 ## Getting Started
 
