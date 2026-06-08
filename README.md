@@ -19,10 +19,10 @@ Key capabilities include:
 [![FIFO logic](https://github.com/user-attachments/assets/4b9b139e-95d4-47ee-a849-96f46a32ed0b)](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)
 
   * LIFO logic:
-[![LIFO logic](https://www.youtube.com/watch?v=eTGfoYHL3V4)](https://www.youtube.com/watch?v=eTGfoYHL3V4)
+[![LIFO logic](https://github.com/user-attachments/assets/c1f48249-81a4-4411-9643-0b9f3234f6ec)](https://www.youtube.com/watch?v=eTGfoYHL3V4)
 
   * Recalculation feature:
-[![Recalculation feature](https://www.youtube.com/watch?v=UXhjoJGGBEk)](https://www.youtube.com/watch?v=UXhjoJGGBEk)
+[![Recalculation feature](https://github.com/user-attachments/assets/c90ed762-8899-40d4-b4fb-047ed6786128)](https://www.youtube.com/watch?v=UXhjoJGGBEk)
 
 ## Getting Started
 
