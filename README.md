@@ -27,6 +27,7 @@ Key capabilities include:
 
 ## Application features
 * **Item catalog**
+
 | List | Form |
 | --- | --- | --- |
 | [![Items List](https://github.com/user-attachments/assets/dd0a71c3-c117-46d4-b20f-9c5d0e6a3386)](https://github.com/user-attachments/assets/fe851348-32a5-400e-b42d-79d73e08a5a4) | [![Item Form](https://github.com/user-attachments/assets/2103e3c6-9c23-4492-b52b-bfefeee6976a)](https://github.com/user-attachments/assets/e4fff78c-f986-4b4f-81c0-ab80484152f4) |
