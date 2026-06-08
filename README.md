@@ -14,6 +14,16 @@ Key capabilities include:
 * **Reporting** – Generate basic stock balance reports and detailed entity reports (e.g., stock movement, inventory transactions) using the `Lintity::EntityReportController` conventions.
 * **Background processing** – Recalculation jobs run asynchronously to keep stock states consistent.
 
+## Demo video
+  * FIFO logic:
+[![FIFO logic](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)](https://www.youtube.com/watch?v=Wm-CKXMB9Wg)
+
+  * LIFO logic:
+[![LIFO logic](https://www.youtube.com/watch?v=eTGfoYHL3V4)](https://www.youtube.com/watch?v=eTGfoYHL3V4)
+
+  * Recalculation feature:
+[![Recalculation feature](https://www.youtube.com/watch?v=UXhjoJGGBEk)](https://www.youtube.com/watch?v=UXhjoJGGBEk)
+
 ## Getting Started
 
 * **Ruby version** – See `.ruby-version`.
